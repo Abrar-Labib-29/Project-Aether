@@ -34,16 +34,22 @@ Designed specifically for older devices running Android 9 (API 28) with limited 
 
 *(To be Uploaded)*
 
-## 📥 Installation
+## 📥 Download & Installation
 
-1. Clone or download the repository.
-   ```bash
-   git clone https://github.com/Abrar-Labib-29/Project-Aether.git
-   ```
-2. Open the project in **Android Studio**.
-3. Build the project and run on an Android device or emulator.
+The easiest way to install Aether is to download the pre-compiled APK directly to your phone:
+
+1. Go to the [Releases page](https://github.com/Abrar-Labib-29/Project-Aether/releases) of this repository.
+2. Download the latest `Aether_v1.0.apk` file.
+3. Open the downloaded file on your Android device to install it. *(You may need to allow your browser/file manager to "Install unknown apps").*
 4. When launching the app for the first time, it will request **Storage** permission (required to save screenshots) and **Display over other apps** permission (required for the floating bubble).
-5. (Optional but recommended) Allow Aether to ignore battery optimizations when prompted to ensure the overlay stays active indefinitely.
+5. *(Optional but highly recommended)*: Allow Aether to ignore battery optimizations when prompted. This ensures the Android OS doesn't kill the overlay in the background.
+
+#### For Developers
+If you wish to build from source:
+```bash
+git clone https://github.com/Abrar-Labib-29/Project-Aether.git
+```
+Open in Android Studio, sync Gradle, and build the project.
 
 ## 👨‍💻 Developed By
 
