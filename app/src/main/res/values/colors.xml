@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bubble_fill">#1A1A2E</color>
+    <color name="panel_bg">#1E1E2E</color>
+    <color name="accent_blue">#3D8BFF</color>
+    <color name="icon_white">#FFFFFF</color>
+</resources>

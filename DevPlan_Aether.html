@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Development Plan – Aether Android App</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #0f172a;
+    --ink2: #334155;
+    --ink3: #64748b;
+    --accent: #7c3aed;
+    --accent-light: #f5f3ff;
+    --accent-mid: #ddd6fe;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --border: #e2e8f0;
+    --bg: #ffffff;
+    --bg2: #f8fafc;
+    --code-bg: #0f172a;
+    --code-fg: #e2e8f0;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--bg);
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    border-radius: 14px;
+    padding: 44px 52px;
+    margin-bottom: 56px;
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '{}';
+    position: absolute;
+    right: 40px; top: 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: #c4b5fd;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .cover h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .cover .sub {
+    font-size: 16px;
+    color: #c4b5fd;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .cover p { color: rgba(255,255,255,0.6); font-size: 13px; }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .cover-meta-item label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #e9d5ff;
+  }
+
+  /* ── Stack overview ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 16px 0 24px;
+  }
+  .stack-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: var(--bg2);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .stack-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .stack-card h4 { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .stack-card p { font-size: 11px; color: var(--ink3); line-height: 1.4; }
+
+  /* ── Section headings ── */
+  h2.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 52px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    display: inline-flex;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  h3.sub-section {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 24px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h3.sub-section::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 16px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  p { margin-bottom: 12px; color: var(--ink2); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Phase timeline ── */
+  .phase-block {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .phase-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .phase-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .phase-title { font-size: 15px; font-weight: 700; flex: 1; }
+  .phase-dur {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink3);
+    background: var(--bg2);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+  .phase-body { padding: 4px 20px 16px; border-top: 1px solid var(--border); background: var(--bg); }
+
+  /* Phase color themes */
+  .phase-setup .phase-header { background: #f0f9ff; }
+  .phase-setup .phase-time { background: #bae6fd; color: #0369a1; }
+  .phase-setup .phase-title { color: #0369a1; }
+
+  .phase-core .phase-header { background: #faf5ff; }
+  .phase-core .phase-time { background: var(--accent-mid); color: #5b21b6; }
+  .phase-core .phase-title { color: #5b21b6; }
+
+  .phase-feature .phase-header { background: var(--teal-light); }
+  .phase-feature .phase-time { background: #99f6e4; color: #0f766e; }
+  .phase-feature .phase-title { color: #0f766e; }
+
+  .phase-ui .phase-header { background: var(--orange-light); }
+  .phase-ui .phase-time { background: #fed7aa; color: #c2410c; }
+  .phase-ui .phase-title { color: #c2410c; }
+
+  .phase-test .phase-header { background: var(--red-light); }
+  .phase-test .phase-time { background: #fecaca; color: #b91c1c; }
+  .phase-test .phase-title { color: #b91c1c; }
+
+  .phase-ship .phase-header { background: var(--green-light); }
+  .phase-ship .phase-time { background: #bbf7d0; color: #15803d; }
+  .phase-ship .phase-title { color: #15803d; }
+
+  /* ── Task list ── */
+  .task-list { list-style: none; padding: 0; margin-top: 12px; }
+  .task-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink2);
+  }
+  .task-list li:last-child { border-bottom: none; }
+  .task-check {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .task-label { flex: 1; }
+  .task-label code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: var(--code-bg);
+    color: #94a3b8;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .task-tag {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+  .task-tag.critical { background: #fecaca; color: #991b1b; }
+  .task-tag.important { background: #fef3c7; color: #92400e; }
+  .task-tag.normal { background: var(--bg2); color: var(--ink3); border: 1px solid var(--border); }
+
+  /* ── Code ── */
+  pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 20px 24px;
+    border-radius: 10px;
+    line-height: 1.8;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+  .kw { color: #c084fc; }
+  .fn { color: #60a5fa; }
+  .str { color: #86efac; }
+  .cm { color: #475569; font-style: italic; }
+  .an { color: #fbbf24; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* ── Callout ── */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; line-height: 1.5; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 3px; text-transform: uppercase; }
+  .callout-body p { margin: 0; font-size: 13px; }
+  .callout.info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+  .callout.info strong { color: var(--blue); }
+  .callout.warn { background: var(--orange-light); border-left: 3px solid var(--orange); }
+  .callout.warn strong { color: var(--orange); }
+  .callout.ok { background: var(--green-light); border-left: 3px solid var(--green); }
+  .callout.ok strong { color: var(--green); }
+  .callout.purple { background: var(--accent-light); border-left: 3px solid var(--accent); }
+  .callout.purple strong { color: var(--accent); }
+
+  /* ── Tables ── */
+  .tbl-wrap { overflow-x: auto; margin: 14px 0; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--ink); color: #fff; }
+  thead th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  tbody tr:nth-child(even) { background: var(--bg2); }
+  tbody td { padding: 10px 14px; font-size: 13px; color: var(--ink2); border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* ── File tree ── */
+  .file-tree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    color: #94a3b8;
+    padding: 20px 24px;
+    border-radius: 10px;
+    line-height: 2;
+    margin: 12px 0;
+  }
+  .file-tree .dir { color: #60a5fa; }
+  .file-tree .kt { color: #86efac; }
+  .file-tree .xml { color: #fbbf24; }
+  .file-tree .other { color: #c084fc; }
+
+  /* ── Day timeline bar ── */
+  .timeline-bar {
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 40px;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+  }
+  .tl-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  /* ── Footer ── */
+  .doc-footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .doc-footer span { font-size: 11px; color: var(--ink3); }
+
+  @media print {
+    body { padding: 20px; }
+    .phase-block { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">Project Development Plan — Single Day Build</div>
+  <h1>Aether</h1>
+  <div class="sub">Android Floating Overlay App — Full Day Execution Plan</div>
+  <p>A strict, hour-by-hour roadmap to build, test, and install the Aether APK in a single day — optimized for the Walton Primo RX7 Mini's constraints.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><label>Build Duration</label><span>~10–12 Hours</span></div>
+    <div class="cover-meta-item"><label>Language</label><span>Kotlin</span></div>
+    <div class="cover-meta-item"><label>Min SDK</label><span>API 28 (Android 9)</span></div>
+    <div class="cover-meta-item"><label>Target APK</label><span>&lt; 2.5 MB</span></div>
+  </div>
+</div>
+
+<!-- Day Timeline Bar -->
+<div style="margin-bottom:8px;"><strong style="font-size:12px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase;">Full Day at a Glance</strong></div>
+<div class="timeline-bar">
+  <div class="tl-seg" style="background:#0369a1;width:12%;">Setup</div>
+  <div class="tl-seg" style="background:#5b21b6;width:25%;">Core Service</div>
+  <div class="tl-seg" style="background:#0f766e;width:25%;">Features</div>
+  <div class="tl-seg" style="background:#c2410c;width:18%;">UI Polish</div>
+  <div class="tl-seg" style="background:#b91c1c;width:10%;">Test</div>
+  <div class="tl-seg" style="background:#15803d;width:10%;">Build+Ship</div>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);margin-bottom:32px;font-family:'JetBrains Mono',monospace;">
+  <span>9:00 AM</span><span>10:30</span><span>1:00 PM</span><span>4:00</span><span>6:00</span><span>7:30</span><span>9:00 PM</span>
+</div>
+
+<!-- ── SECTION 1: TECH STACK ── -->
+<h2 class="section-title" id="s1"><span class="section-num">1</span> Tech Stack</h2>
+
+<p>Every choice below was made against a single constraint: <strong>this must run invisibly on a 3 GB Android 9 device forever</strong>. No convenience libraries. No heavy frameworks. Pure Android SDK.</p>
+
+<div class="stack-grid">
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#1e1b4b;">🇰</div>
+    <div>
+      <h4>Kotlin (100%)</h4>
+      <p>Modern, null-safe, concise. No Java. Kotlin stdlib is already in Android runtime — zero extra APK weight for modern syntax.</p>
+    </div>
+  </div>
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#f0f9ff;">🏗️</div>
+    <div>
+      <h4>Android SDK Only</h4>
+      <p>Zero third-party dependencies. No Retrofit, Dagger, Glide, or any library. Pure AOSP APIs.</p>
+    </div>
+  </div>
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#f5f3ff;">⚙️</div>
+    <div>
+      <h4>Foreground Service</h4>
+      <p>The backbone of persistence. START_STICKY + BOOT receiver. Cannot be killed by LMK.</p>
+    </div>
+  </div>
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#f0fdfa;">🪟</div>
+    <div>
+      <h4>WindowManager Overlay</h4>
+      <p>TYPE_APPLICATION_OVERLAY draws above everything. No Activity needed after startup.</p>
+    </div>
+  </div>
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#fff7ed;">📷</div>
+    <div>
+      <h4>MediaProjection API</h4>
+      <p>Only valid screenshot method on API 28. Token cached per session. ImageReader + VirtualDisplay.</p>
+    </div>
+  </div>
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#fef2f2;">🔊</div>
+    <div>
+      <h4>AudioManager</h4>
+      <p>adjustVolume() with FLAG_SHOW_UI. Native volume OSD appears — zero custom UI needed for volume.</p>
+    </div>
+  </div>
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#f0fdf4;">🎨</div>
+    <div>
+      <h4>Canvas Drawing</h4>
+      <p>Bubble drawn with Canvas.drawCircle(). No image assets. No layout inflation overhead.</p>
+    </div>
+  </div>
+  <div class="stack-card">
+    <div class="stack-icon" style="background:#faf5ff;">🛠️</div>
+    <div>
+      <h4>Build: Gradle + AGP</h4>
+      <p>Android Gradle Plugin. No R8 full-mode — just minification + shrinking. Release build, debug-signed locally.</p>
+    </div>
+  </div>
+</div>
+
+<div class="callout warn">
+  <div class="callout-icon">🚫</div>
+  <div class="callout-body">
+    <strong>Explicitly Rejected Libraries</strong>
+    <p>Hilt/Dagger (DI overhead), Retrofit (no network), Room (no database), Glide/Coil (no image loading), Coroutines-heavy patterns (simple Handler is enough), Jetpack Compose (too heavy for a service-rendered view), any analytics SDK, any ads SDK.</p>
+  </div>
+</div>
+
+<!-- ── SECTION 2: FILE STRUCTURE ── -->
+<h2 class="section-title" id="s2"><span class="section-num">2</span> Project File Structure</h2>
+
+<p>Keep the structure dead flat. Every file you create should have exactly one clear job.</p>
+
+<div class="file-tree"><span class="dir">Aether/</span>
+├── <span class="dir">app/</span>
+│   ├── <span class="dir">src/main/</span>
+│   │   ├── <span class="dir">java/com/Aether/</span>
+│   │   │   ├── <span class="kt">LauncherActivity.kt</span>        <span class="cm">← Permission gate, starts service, finishes</span>
+│   │   │   ├── <span class="kt">AetherService.kt</span>         <span class="cm">← Foreground service, manages all views</span>
+│   │   │   ├── <span class="kt">BubbleView.kt</span>              <span class="cm">← Custom View: drag, snap, opacity</span>
+│   │   │   ├── <span class="kt">ActionPanelView.kt</span>         <span class="cm">← 3-button panel, animations</span>
+│   │   │   ├── <span class="kt">ScreenshotManager.kt</span>       <span class="cm">← MediaProjection, ImageReader, save</span>
+│   │   │   └── <span class="kt">BootReceiver.kt</span>            <span class="cm">← BOOT_COMPLETED → startForegroundService</span>
+│   │   ├── <span class="dir">res/</span>
+│   │   │   ├── <span class="dir">drawable/</span>
+│   │   │   │   ├── <span class="xml">ic_vol_up.xml</span>              <span class="cm">← Vector: volume up icon</span>
+│   │   │   │   ├── <span class="xml">ic_vol_down.xml</span>            <span class="cm">← Vector: volume down icon</span>
+│   │   │   │   └── <span class="xml">ic_screenshot.xml</span>          <span class="cm">← Vector: camera/screenshot icon</span>
+│   │   │   ├── <span class="dir">values/</span>
+│   │   │   │   ├── <span class="xml">colors.xml</span>
+│   │   │   │   └── <span class="xml">strings.xml</span>
+│   │   │   └── <span class="dir">xml/</span>
+│   │   │       └── <span class="xml">file_paths.xml</span>             <span class="cm">← FileProvider paths for media</span>
+│   │   └── <span class="xml">AndroidManifest.xml</span>
+│   └── <span class="other">build.gradle</span>                       <span class="cm">← minSdk 28, no external deps</span>
+└── <span class="other">build.gradle</span>                           <span class="cm">← Project-level Gradle</span></div>
+
+<div class="callout purple">
+  <div class="callout-icon">📁</div>
+  <div class="callout-body">
+    <strong>6 Kotlin files. That's it.</strong>
+    <p>The entire app is 6 Kotlin files + 3 vector drawables + the manifest. This is intentional. More files = more complexity = harder to debug in a one-day build. Keep it flat and simple.</p>
+  </div>
+</div>
+
+<!-- ── SECTION 3: PHASE-BY-PHASE PLAN ── -->
+<h2 class="section-title" id="s3"><span class="section-num">3</span> Phase-by-Phase Build Plan</h2>
+
+<!-- PHASE 0 -->
+<div class="phase-block phase-setup">
+  <div class="phase-header">
+    <div class="phase-time">9:00 – 10:30 AM</div>
+    <div class="phase-title">Phase 0 — Environment Setup &amp; Project Scaffold</div>
+    <div class="phase-dur">~1.5 hrs</div>
+  </div>
+  <div class="phase-body">
+    <p style="margin-top:12px;color:var(--ink3);">Get Android Studio ready and the project compiling to an empty APK before writing any feature code.</p>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">Install <strong>Android Studio</strong> (Hedgehog or newer). During setup, install Android SDK Platform 28 specifically.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Create new project: <strong>Empty Activity</strong>, package <code>com.Aether</code>, Language: Kotlin, Min SDK: API 28.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">In <code>build.gradle (app)</code>: set <code>minSdk = 28</code>, <code>targetSdk = 34</code>, <code>compileSdk = 34</code>. Remove all template dependencies except core-ktx and appcompat.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Enable <strong>R8 shrinking</strong>: in release buildType set <code>minifyEnabled = true</code>, <code>shrinkResources = true</code>. This cuts APK size dramatically.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Write <code>AndroidManifest.xml</code> fully (see manifest spec in Section 4 below). Declare all permissions, service, receiver, activity.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Enable USB debugging on your Walton RX7 Mini. (Settings → About → tap Build Number 7 times → Developer Options → USB Debugging). Connect via USB.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Run a blank build to confirm the project compiles and deploys to the device. If this works, the scaffold is done.</div><span class="task-tag normal">NORMAL</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PHASE 1 -->
+<div class="phase-block phase-core">
+  <div class="phase-header">
+    <div class="phase-time">10:30 AM – 1:00 PM</div>
+    <div class="phase-title">Phase 1 — Core Service &amp; Floating Bubble</div>
+    <div class="phase-dur">~2.5 hrs</div>
+  </div>
+  <div class="phase-body">
+    <p style="margin-top:12px;color:var(--ink3);">Build the survival engine. By the end of this phase, a draggable bubble must be permanently floating on screen and survive being sent to the background.</p>
+
+    <h3 class="sub-section" style="margin-top:16px;">Step 1 — LauncherActivity.kt</h3>
+    <p>This Activity has no layout. Its only job is to check the overlay permission and start the service, then immediately call <code>finish()</code>.</p>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">Check <code>Settings.canDrawOverlays(this)</code>. If false, launch <code>ACTION_MANAGE_OVERLAY_PERMISSION</code> intent and wait for <code>onActivityResult</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">If permission granted, call <code>startForegroundService(Intent(this, AetherService::class.java))</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Call <code>finish()</code> immediately so no Activity stays in the task stack.</div><span class="task-tag critical">CRITICAL</span></li>
+    </ul>
+
+    <h3 class="sub-section">Step 2 — AetherService.kt</h3>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">Extend <code>Service</code>. In <code>onStartCommand()</code> return <code>START_STICKY</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Create notification channel (<code>IMPORTANCE_LOW</code>) and call <code>startForeground(1, notification)</code> as the very first action. This is what keeps the service alive.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Get <code>WindowManager</code> via <code>getSystemService(WINDOW_SERVICE)</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Create <code>WindowManager.LayoutParams</code> with type <code>TYPE_APPLICATION_OVERLAY</code>, flags <code>FLAG_NOT_FOCUSABLE or FLAG_LAYOUT_IN_SCREEN</code>, format <code>TRANSLUCENT</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Instantiate <code>BubbleView</code> and call <code>windowManager.addView(bubbleView, layoutParams)</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">In <code>onDestroy()</code> remove the view: <code>windowManager.removeView(bubbleView)</code>. Also call <code>stopForeground(true)</code>.</div><span class="task-tag important">IMPORTANT</span></li>
+    </ul>
+
+    <h3 class="sub-section">Step 3 — BubbleView.kt</h3>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">Extend <code>View</code>. Override <code>onDraw(canvas: Canvas)</code> — draw a filled circle with <code>canvas.drawCircle()</code>. No bitmap loading. Use <code>Paint</code> only.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Override <code>onTouchEvent(event: MotionEvent)</code>. Track <code>ACTION_DOWN</code>, <code>ACTION_MOVE</code>, <code>ACTION_UP</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">On <code>ACTION_MOVE</code>: update <code>WindowManager.LayoutParams.x</code> and <code>.y</code>, call <code>windowManager.updateViewLayout(this, params)</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">On <code>ACTION_UP</code>: calculate which edge (left or right) is closer. Animate <code>params.x</code> to 0 or <code>screenWidth - bubbleSize</code> using a <code>ValueAnimator</code> with <code>OvershootInterpolator</code>.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Distinguish tap vs drag by comparing total movement to a threshold of 8dp. If movement &lt; 8dp on ACTION_UP, call <code>onTapListener()</code>.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Idle fade: post a <code>Runnable</code> on a <code>Handler(Looper.getMainLooper())</code> with 3000ms delay. On fire: animate <code>alpha</code> from 1.0f to 0.18f. Cancel + repost on any touch event.</div><span class="task-tag important">IMPORTANT</span></li>
+    </ul>
+
+    <p><strong>✅ Checkpoint:</strong> At this point, deploy to the device. The bubble should appear, be draggable, snap to the edge, and fade after 3 seconds. Open another app — the bubble should remain. Lock and unlock the phone — the bubble should still be there.</p>
+  </div>
+</div>
+
+<!-- PHASE 2 -->
+<div class="phase-block phase-feature">
+  <div class="phase-header">
+    <div class="phase-time">1:00 PM – 4:00 PM</div>
+    <div class="phase-title">Phase 2 — Volume Control, Screenshot &amp; Boot Receiver</div>
+    <div class="phase-dur">~3 hrs</div>
+  </div>
+  <div class="phase-body">
+    <p style="margin-top:12px;color:var(--ink3);">Build all three functional features. Volume is straightforward. Screenshot requires careful MediaProjection handling.</p>
+
+    <h3 class="sub-section" style="margin-top:16px;">Step 4 — ActionPanelView.kt</h3>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">Extend <code>LinearLayout</code> (vertical). Inflate or programmatically add three <code>ImageButton</code>s: Vol+, Vol-, Screenshot. Set background to a dark rounded card via a shape drawable.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Add show/hide methods using <code>ViewPropertyAnimator</code>: <code>scaleX/Y from 0.7→1.0 + alpha 0→1</code> for show (150ms), reverse for hide (120ms).</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Add the panel as a second <code>WindowManager</code> view in <code>AetherService</code>. Position it adjacent to the bubble (left if bubble is on right edge).</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Wire up Vol+ button → <code>audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Wire up Vol- button → <code>audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI)</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+    </ul>
+
+    <h3 class="sub-section">Step 5 — ScreenshotManager.kt</h3>
+    <div class="callout info" style="margin-bottom:14px;">
+      <div class="callout-icon">ℹ️</div>
+      <div class="callout-body">
+        <strong>MediaProjection Flow on API 28</strong>
+        <p>You cannot request MediaProjection from a Service directly. You need to launch a transparent Activity that requests the permission, receives the result in <code>onActivityResult</code>, and passes the Intent back to the Service. This is the correct, mandatory architecture for API 28.</p>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">Create <code>ScreenCaptureRequestActivity</code> — a transparent, no-animation Activity. In <code>onCreate()</code>, get <code>MediaProjectionManager</code> and call <code>startActivityForResult(manager.createScreenCaptureIntent(), REQUEST_CODE)</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">In <code>onActivityResult</code>, pass the result Intent back to <code>AetherService</code> via a local broadcast (<code>LocalBroadcastManager</code> or a direct reference). Call <code>finish()</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">In <code>ScreenshotManager</code>: store the <code>MediaProjection</code> object. Create <code>ImageReader</code> with screen size and <code>PixelFormat.RGBA_8888</code>. Create <code>VirtualDisplay</code> from the projection.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Before capture: call <code>hideOverlay()</code> on both views (set alpha to 0f instantly, no animation). Wait one frame (post to Handler) before capturing to ensure the overlay is fully hidden in the next render frame.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Acquire the latest <code>Image</code> from <code>ImageReader</code>. Read the byte buffer. Create a <code>Bitmap</code>. Release the Image immediately to free the buffer.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Save the Bitmap to <code>MediaStore.Images</code> using <code>ContentValues</code>. Set MIME type to <code>image/png</code>, relative path to <code>Pictures/Screenshots</code>, display name with timestamp.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">After save: call <code>showOverlay()</code> to restore view alpha. Show <code>Toast.makeText("Screenshot saved")</code>.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Do ALL file I/O and Bitmap processing on a background thread (<code>Thread { }.start()</code> is fine — no need for coroutines for this). Only call UI operations back on the main thread.</div><span class="task-tag critical">CRITICAL</span></li>
+    </ul>
+
+    <h3 class="sub-section">Step 6 — BootReceiver.kt</h3>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">Extend <code>BroadcastReceiver</code>. In <code>onReceive()</code>: check <code>action == Intent.ACTION_BOOT_COMPLETED</code>, then call <code>context.startForegroundService(Intent(context, AetherService::class.java))</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Register it in the manifest with <code>&lt;action android:name="android.intent.action.BOOT_COMPLETED"/&gt;</code> and <code>android:exported="true"</code>.</div><span class="task-tag critical">CRITICAL</span></li>
+    </ul>
+
+    <p><strong>✅ Checkpoint:</strong> Volume buttons should adjust media volume with the system OSD appearing. Screenshot button should capture the screen (without the bubble visible) and the image should appear in Gallery.</p>
+  </div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="phase-block phase-ui">
+  <div class="phase-header">
+    <div class="phase-time">4:00 PM – 6:00 PM</div>
+    <div class="phase-title">Phase 3 — UI Polish &amp; Edge Cases</div>
+    <div class="phase-dur">~2 hrs</div>
+  </div>
+  <div class="phase-body">
+    <p style="margin-top:12px;color:var(--ink3);">The app works. Now make it feel good. Fix edge cases that will annoy you daily.</p>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label"><strong>Persist bubble position.</strong> Save last X/Y position to <code>SharedPreferences</code> on every drag-release. Restore position on service start. So the bubble stays where you last left it after reboot.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>Keyboard avoidance.</strong> Add flag <code>FLAG_NOT_TOUCH_MODAL</code> to WindowManager params so the overlay does not steal keyboard focus from other apps.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>Safe zones.</strong> Clamp the bubble's Y position so it cannot go behind the status bar (top ~24dp) or navigation bar (bottom ~48dp).</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>Panel position correction.</strong> When the panel would extend off-screen (bubble near top or bottom), flip the panel's layout direction. Clamp its Y so it stays within screen bounds.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>Long-press volume.</strong> Add <code>setOnLongClickListener</code> on Vol+/Vol- buttons. Use a <code>Handler.postDelayed()</code> repeating every 300ms to repeatedly call <code>adjustVolume()</code> until the finger lifts.</div><span class="task-tag normal">NORMAL</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>Notification "Stop" action.</strong> Add an action to the notification that broadcasts a stop intent. In the service, register a receiver for this intent and call <code>stopSelf()</code>.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>Outside-tap dismiss.</strong> Add a full-screen transparent view below the panel in the WindowManager. When tapped, dismiss the panel and remove this view.</div><span class="task-tag normal">NORMAL</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>Launcher icon.</strong> Add a simple launcher icon. The app icon should be visible so the user can restart Aether if needed.</div><span class="task-tag normal">NORMAL</span></li>
+      <li><div class="task-check"></div><div class="task-label"><strong>First-run flow.</strong> If SYSTEM_ALERT_WINDOW permission was just granted, show a brief Toast: "Aether is running. Look for the floating button."</div><span class="task-tag normal">NORMAL</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PHASE 4 -->
+<div class="phase-block phase-test">
+  <div class="phase-header">
+    <div class="phase-time">6:00 PM – 7:30 PM</div>
+    <div class="phase-title">Phase 4 — On-Device Testing</div>
+    <div class="phase-dur">~1.5 hrs</div>
+  </div>
+  <div class="phase-body">
+    <p style="margin-top:12px;color:var(--ink3);">No emulator. Test directly on the Walton RX7 Mini. Every scenario that matters in real daily use.</p>
+
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Test Scenario</th><th>Expected Result</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>T01</td><td>Fresh install, launch app</td><td>Permission screen appears, user grants overlay, bubble appears</td><td>🔴 Critical</td></tr>
+        <tr><td>T02</td><td>Tap bubble</td><td>Action panel appears with smooth scale+fade animation in ≤150ms</td><td>🔴 Critical</td></tr>
+        <tr><td>T03</td><td>Tap Vol+ button</td><td>System volume OSD appears, volume increases by 1 step</td><td>🔴 Critical</td></tr>
+        <tr><td>T04</td><td>Tap Vol- button</td><td>System volume OSD appears, volume decreases by 1 step</td><td>🔴 Critical</td></tr>
+        <tr><td>T05</td><td>Tap Screenshot button</td><td>Bubble hides, screen captured, bubble returns, Toast shown, image in Gallery</td><td>🔴 Critical</td></tr>
+        <tr><td>T06</td><td>Drag bubble across screen</td><td>Smooth movement, snaps to nearest edge on release</td><td>🔴 Critical</td></tr>
+        <tr><td>T07</td><td>Leave phone idle for 5 seconds</td><td>Bubble fades to ~18% opacity, returns to full on touch</td><td>🟡 Important</td></tr>
+        <tr><td>T08</td><td>Open 5–6 other apps, use them normally</td><td>Bubble stays visible over all apps</td><td>🔴 Critical</td></tr>
+        <tr><td>T09</td><td>Leave phone for 30 minutes</td><td>Bubble is still present when you pick up the phone</td><td>🔴 Critical</td></tr>
+        <tr><td>T10</td><td>Reboot the device</td><td>After boot, bubble appears automatically without launching app</td><td>🔴 Critical</td></tr>
+        <tr><td>T11</td><td>Screenshot while in a third-party app</td><td>That app is captured, not Aether. Bubble not in screenshot.</td><td>🔴 Critical</td></tr>
+        <tr><td>T12</td><td>Long-press Vol+ for 2 seconds</td><td>Volume rapidly increases during hold</td><td>🟢 Normal</td></tr>
+        <tr><td>T13</td><td>Check RAM in Developer Options</td><td>Aether process uses &lt; 18 MB RAM at idle</td><td>🟡 Important</td></tr>
+        <tr><td>T14</td><td>Tap "Stop" in notification</td><td>Bubble disappears, service stops cleanly</td><td>🟡 Important</td></tr>
+        <tr><td>T15</td><td>Tap outside open action panel</td><td>Panel dismisses cleanly</td><td>🟢 Normal</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-icon">🐛</div>
+      <div class="callout-body">
+        <strong>Most Common Bugs to Watch For</strong>
+        <p>Bubble appears in screenshot (hide timing issue) · Volume change crashes if audio focus not available (use try-catch) · Service gets killed (check startForeground is called before any other operation) · Panel goes off-screen near bottom (clamping bug) · App crashes on first permission grant because SYSTEM_ALERT_WINDOW check happens before the settings screen returns.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 5 -->
+<div class="phase-block phase-ship">
+  <div class="phase-header">
+    <div class="phase-time">7:30 PM – 9:00 PM</div>
+    <div class="phase-title">Phase 5 — Release Build &amp; Install</div>
+    <div class="phase-dur">~1.5 hrs</div>
+  </div>
+  <div class="phase-body">
+    <p style="margin-top:12px;color:var(--ink3);">Build the final APK, verify it is under 2.5 MB, sign it, and install it permanently on the device.</p>
+    <ul class="task-list">
+      <li><div class="task-check"></div><div class="task-label">In Android Studio: <strong>Build → Generate Signed Bundle/APK → APK</strong>. Create a new keystore (keep it safe). Build Release variant.</div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Check APK size. Go to <strong>Build → Analyze APK</strong>. Should be &lt; 2.5 MB. If larger, check for leftover resources or accidental dependencies.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Uninstall the debug APK from the device first to avoid signature conflicts: <code>adb uninstall com.Aether</code></div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Install the release APK: <code>adb install app-release.apk</code></div><span class="task-tag critical">CRITICAL</span></li>
+      <li><div class="task-check"></div><div class="task-label">Run the full test checklist (T01–T15) one more time on the release build. Release builds behave differently — R8 can sometimes strip needed classes if ProGuard rules are missing.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Reboot the device once more and confirm bubble auto-starts via BootReceiver.</div><span class="task-tag important">IMPORTANT</span></li>
+      <li><div class="task-check"></div><div class="task-label">Copy the signed APK to a safe location (Google Drive, USB, SD card) as a backup — so you can reinstall if needed without rebuilding.</div><span class="task-tag normal">NORMAL</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── SECTION 4: MANIFEST ── -->
+<h2 class="section-title" id="s4"><span class="section-num">4</span> AndroidManifest.xml Reference</h2>
+
+<p>The manifest is one of the most critical files. Get this wrong and nothing works. Here is the exact structure you need:</p>
+
+<pre><span class="cm">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="kw">&lt;manifest</span> xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.Aether"<span class="kw">&gt;</span>
+
+    <span class="cm">&lt;!-- Auto-granted permissions --&gt;</span>
+    <span class="kw">&lt;uses-permission</span> android:name=<span class="str">"android.permission.FOREGROUND_SERVICE"</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;uses-permission</span> android:name=<span class="str">"android.permission.RECEIVE_BOOT_COMPLETED"</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;uses-permission</span> android:name=<span class="str">"android.permission.WRITE_EXTERNAL_STORAGE"</span><span class="kw">/&gt;</span>
+
+    <span class="cm">&lt;!-- Special permission: user must grant manually in Settings --&gt;</span>
+    <span class="kw">&lt;uses-permission</span> android:name=<span class="str">"android.permission.SYSTEM_ALERT_WINDOW"</span><span class="kw">/&gt;</span>
+
+    <span class="kw">&lt;application</span>
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Aether"
+        android:theme="@style/Theme.AppCompat.NoActionBar"<span class="kw">&gt;</span>
+
+        <span class="cm">&lt;!-- Entry point: no UI, just permission gate --&gt;</span>
+        <span class="kw">&lt;activity</span>
+            android:name=<span class="str">".LauncherActivity"</span>
+            android:exported="true"<span class="kw">&gt;</span>
+            <span class="kw">&lt;intent-filter&gt;</span>
+                <span class="kw">&lt;action</span> android:name=<span class="str">"android.intent.action.MAIN"</span><span class="kw">/&gt;</span>
+                <span class="kw">&lt;category</span> android:name=<span class="str">"android.intent.category.LAUNCHER"</span><span class="kw">/&gt;</span>
+            <span class="kw">&lt;/intent-filter&gt;</span>
+        <span class="kw">&lt;/activity&gt;</span>
+
+        <span class="cm">&lt;!-- Transparent activity for MediaProjection permission request --&gt;</span>
+        <span class="kw">&lt;activity</span>
+            android:name=<span class="str">".ScreenCaptureRequestActivity"</span>
+            android:exported="false"
+            android:theme=<span class="str">"@android:style/Theme.Translucent.NoTitleBar"</span><span class="kw">/&gt;</span>
+
+        <span class="cm">&lt;!-- The main survival engine --&gt;</span>
+        <span class="kw">&lt;service</span>
+            android:name=<span class="str">".AetherService"</span>
+            android:exported="false"
+            android:foregroundServiceType=<span class="str">"mediaProjection"</span><span class="kw">/&gt;</span>
+
+        <span class="cm">&lt;!-- Starts service on device boot --&gt;</span>
+        <span class="kw">&lt;receiver</span>
+            android:name=<span class="str">".BootReceiver"</span>
+            android:exported="true"<span class="kw">&gt;</span>
+            <span class="kw">&lt;intent-filter&gt;</span>
+                <span class="kw">&lt;action</span> android:name=<span class="str">"android.intent.action.BOOT_COMPLETED"</span><span class="kw">/&gt;</span>
+            <span class="kw">&lt;/intent-filter&gt;</span>
+        <span class="kw">&lt;/receiver&gt;</span>
+
+    <span class="kw">&lt;/application&gt;</span>
+<span class="kw">&lt;/manifest&gt;</span></pre>
+
+<!-- ── SECTION 5: RISK REGISTER ── -->
+<h2 class="section-title" id="s5"><span class="section-num">5</span> Risk Register &amp; Mitigations</h2>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+  <tbody>
+    <tr><td>Service still gets killed despite foreground</td><td>Low</td><td>High</td><td>Ensure <code>startForeground()</code> is called as the absolute first line in <code>onStartCommand</code>. If it still happens on this specific ROM, add a <code>PendingIntent</code> alarm via AlarmManager as a backup restart.</td></tr>
+    <tr><td>Screenshot shows bubble in image</td><td>Medium</td><td>Medium</td><td>After setting alpha=0f, post a 2-frame delay via Handler before triggering the capture. Use <code>postDelayed(..., 100)</code> to be safe.</td></tr>
+    <tr><td>MediaProjection permission dialog appears every screenshot</td><td>Medium</td><td>Medium</td><td>Cache the MediaProjection object after first grant. Do not call <code>stop()</code> on it between screenshots. Only re-request if the object is null.</td></tr>
+    <tr><td>ProGuard strips needed Android classes in release build</td><td>Low-Medium</td><td>High</td><td>Add <code>-keep class com.Aether.** { *; }</code> to <code>proguard-rules.pro</code>. Test release APK thoroughly before calling done.</td></tr>
+    <tr><td>WRITE_EXTERNAL_STORAGE runtime permission denied</td><td>Low</td><td>Medium</td><td>Request it at runtime when screenshot button is first tapped. Show a dialog explaining why it's needed if denied.</td></tr>
+    <tr><td>Build takes longer than expected</td><td>Medium</td><td>Low</td><td>Time buffer is built into each phase. Phase 3 (UI polish) and Phase 4 long-press can be cut from v1 if time is short — they are "SHOULD" not "MUST".</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ── SECTION 6: PERFORMANCE BUDGET ── -->
+<h2 class="section-title" id="s6"><span class="section-num">6</span> Performance Budget</h2>
+
+<p>These are hard targets. If the app exceeds them, you must refactor before calling the build complete.</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Metric</th><th>How to Measure</th><th>Target</th></tr></thead>
+  <tbody>
+    <tr><td>APK size</td><td>Build → Analyze APK in Android Studio</td><td><strong>&lt; 2.5 MB</strong></td></tr>
+    <tr><td>Idle RAM</td><td>Developer Options → Running Services → Aether</td><td><strong>&lt; 18 MB</strong></td></tr>
+    <tr><td>Idle CPU</td><td>Developer Options → CPU usage monitor</td><td><strong>&lt; 1%</strong></td></tr>
+    <tr><td>Bubble tap → panel visible</td><td>Stopwatch / visual check</td><td><strong>&lt; 150ms</strong></td></tr>
+    <tr><td>Screenshot button → capture complete</td><td>Observe Toast delay</td><td><strong>&lt; 1.5 seconds</strong></td></tr>
+    <tr><td>Service startup → bubble visible</td><td>Time from app icon tap</td><td><strong>&lt; 800ms</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout ok">
+  <div class="callout-icon">🏁</div>
+  <div class="callout-body">
+    <strong>Definition of Done</strong>
+    <p>The build is complete when: all T01–T11 tests pass on the release APK, the APK is under 2.5 MB, the service survives 30 minutes in the background, boot auto-start works after a reboot, and the signed APK is backed up. Everything else is polish for v2.</p>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <span>Aether — Project Development Plan v1.0</span>
+  <span>Single Day Build — Personal Project</span>
+</div>
+
+</body>
+</html>

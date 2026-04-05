@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aether</string>
+    <string name="notification_channel_name">Aether Service</string>
+    <string name="notification_text">Aether is running</string>
+    <string name="stop_action">Stop</string>
+    <string name="screenshot_saved">Screenshot saved</string>
+    <string name="screenshot_failed">Screenshot failed</string>
+    <string name="overlay_permission_needed">Please grant overlay permission to use Aether</string>
+    <string name="floatkey_running">Aether is running. Look for the floating button.</string>
+</resources>
