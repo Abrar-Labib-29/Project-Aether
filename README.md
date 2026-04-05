@@ -32,7 +32,7 @@ Designed specifically for older devices running Android 9 (API 28) with limited 
 
 ## 📸 Screenshots
 
-*(Add your screenshots here)*
+*(To be Uploaded)*
 
 ## 📥 Installation
 
